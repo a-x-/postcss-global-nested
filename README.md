@@ -24,7 +24,7 @@ test.css:
         browsers: ['last 2 version'],
       }),
       require('postcss-nested')({}),
-      require('postcss-nested')({}),
+      require('postcss-global-nested')({}),
     ],
   },
 }
@@ -32,7 +32,13 @@ test.css:
 
 ### Use it vanilla postcss and postcss-nested
 ```js
-const css = await fs.readFile('test.css', 'utf8');
-const result = await pcss([nested, globalNested]).process(css);
-result.css // ':global(.foo) {} :global(.bar) {}'
+import pcss from 'postcss';
+import nested from 'postcss-nested';
+import globalNested from 'postcss-global-nested';
+
+(async () => {
+  const css = await fs.readFile('test.css', 'utf8');
+  const result = await pcss([nested, globalNested]).process(css);
+  result.css // -> ':global(.foo) {} :global(.bar) {}'
+ })();
 ```
