@@ -1,6 +1,6 @@
 # postcss-global-nested [![Build Status](https://travis-ci.org/a-x-/postcss-global-nested.svg?branch=master)](https://travis-ci.org/a-x-/postcss-global-nested)
 
-Wrap styles into `:global` like postcss-nested does it but for unstandard `:global` selector.
+Wrap styles into a `:global` like [postcss-nested](https://github.com/postcss/postcss-nested) does it for usual selectors.
 
 You should use `:global` as rare as you can.
 
