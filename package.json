@@ -1,0 +1,15 @@
+{
+  "name": "postcss-global-nested",
+  "description": "Wrap styles into :global like postcss-nested does it but for unstandard :global selector",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "ava"
+  },
+  "devDependencies": {
+    "ava": "^0.22.0"
+  },
+  "repository": "git@github.com:a-x-/postcss-global-nested.git",
+  "author": "alex <alex@rocketguys.com>",
+  "version": "1.0.0",
+  "license": "MIT"
+}
