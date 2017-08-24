@@ -11,7 +11,7 @@
   },
   "repository": "git@github.com:a-x-/postcss-global-nested.git",
   "author": "alex <alex@rocketguys.com>",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "license": "MIT",
   "dependencies": {
     "postcss": "^6.0.9"
