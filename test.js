@@ -39,6 +39,16 @@ const fixtures = {
         :global(.qux :global .wat) {}
     `,
   },
+  nested: {
+    css: `
+      .bar {
+        :global {
+          .foo {}
+        }
+      }
+    `,
+    ref: `.bar :global(.foo) {}`,
+  },
 };
 
 test('basic', async t => {
@@ -54,4 +64,9 @@ test('simple', async t => {
 test('complex', async t => {
   const result = await pcss([nested, globalNested]).process(fixtures.complex.css);
   t.is(result.css, fixtures.complex.ref);
+});
+
+test('nested', async t => {
+  const result = await pcss([nested, globalNested]).process(fixtures.nested.css);
+  t.is(result.css.trim(), fixtures.nested.ref);
 });
