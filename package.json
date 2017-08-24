@@ -6,10 +6,14 @@
     "test": "ava"
   },
   "devDependencies": {
-    "ava": "^0.22.0"
+    "ava": "^0.22.0",
+    "postcss-nested": "^2.1.2"
   },
   "repository": "git@github.com:a-x-/postcss-global-nested.git",
   "author": "alex <alex@rocketguys.com>",
   "version": "1.0.0",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "postcss": "^6.0.9"
+  }
 }

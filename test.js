@@ -1,12 +1,57 @@
 import test from 'ava';
 import lib from './src';
+import pcss from 'postcss';
+import globalNested from './src';
+import nested from 'postcss-nested';
 
-test('foo', t => {
-  t.pass();
+const fixtures = {
+  basic: {
+    css: `
+      .bar {
+        .foo {}
+      }
+    `,
+    ref: `.bar .foo {}`,
+  },
+  simple: {
+    css: `
+      :global {
+        .foo {}
+      }
+    `,
+    ref: `:global(.foo) {}`,
+  },
+  complex: {
+    css: `
+      :global {
+        :global(.foo) {}
+        :global .baz {}
+        .qux {
+          .sux {}
+          :global .wat {}
+        }
+      }
+    `,
+    ref: `
+      :global(:global(.foo)) {}
+        :global(:global .baz) {}
+        :global(.qux .sux) {}
+        :global(.qux :global .wat) {}
+    `,
+  },
+};
+
+test('basic', async t => {
+  const result = await pcss([nested, globalNested]).process(fixtures.basic.css);
+  t.is(result.css.trim(), fixtures.basic.ref);
 });
 
-test('bar', async t => {
-  const bar = Promise.resolve('bar');
+test('simple', async t => {
+  const result = await pcss([nested, globalNested]).process(fixtures.simple.css);
+  t.is(result.css.trim(), fixtures.simple.ref);
+});
 
-  t.is(await bar, 'bar');
+test('complex', async t => {
+  const result = await pcss([nested, globalNested]).process(fixtures.complex.css);
+  t.is(result.css, fixtures.complex.ref);
 });
