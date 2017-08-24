@@ -14,7 +14,7 @@ test.css:
 }
 ```
 
-### Use it with postcss, postcss-nested and webpack
+### Use it with `postcss`, `postcss-nested` and `webpack`
 ```json5
 {
   loader: 'postcss-loader',
@@ -30,7 +30,7 @@ test.css:
 }
 ```
 
-### Use it vanilla postcss and postcss-nested
+### Use it w/ vanilla `postcss` and `postcss-nested`
 ```js
 import pcss from 'postcss';
 import nested from 'postcss-nested';
