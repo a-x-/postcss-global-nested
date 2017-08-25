@@ -37,7 +37,7 @@ import nested from 'postcss-nested';
 import globalNested from 'postcss-global-nested';
 
 (async () => {
-  const css = await fs.readFile('test.css', 'utf8');
+  const css = await util.promisify(fs.readFile)('test.css', 'utf8');
   const result = await pcss([nested, globalNested]).process(css);
   result.css // -> ':global(.foo) {} :global(.bar) {}'
  })();
