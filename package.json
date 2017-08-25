@@ -1,6 +1,6 @@
 {
   "name": "postcss-global-nested",
-  "description": "Wrap styles into :global like postcss-nested does it but for unstandard :global selector",
+  "description": "[🚧 WIP] Wrap styles into :global like postcss-nested does it but for unstandard :global selector",
   "main": "src/index.js",
   "scripts": {
     "test": "ava"
