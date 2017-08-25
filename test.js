@@ -49,6 +49,14 @@ const fixtures = {
     `,
     ref: `.bar :global(.foo) {}`,
   },
+  multiselector: {
+    css: `
+      :global {
+        .foo, .bar {}
+      }
+    `,
+    ref: `:global(.foo), :global(.bar) {}`,
+  },
 };
 
 test('basic', async t => {
@@ -69,4 +77,9 @@ test('complex', async t => {
 test('nested', async t => {
   const result = await pcss([nested, globalNested]).process(fixtures.nested.css);
   t.is(result.css.trim(), fixtures.nested.ref);
+});
+
+test('multiselector', async t => {
+  const result = await pcss([nested, globalNested]).process(fixtures.multiselector.css);
+  t.is(result.css.trim(), fixtures.multiselector.ref);
 });
