@@ -21,6 +21,14 @@ const fixtures = {
     `,
     ref: `:global(.foo) {}`,
   },
+  multiple: {
+    css: `
+      :global {
+        .foo, .bar {}
+      }
+    `,
+    ref: `:global(.foo), :global(.bar) {}`,
+  },
   complex: {
     css: `
       :global {
@@ -37,6 +45,42 @@ const fixtures = {
         :global(:global .baz) {}
         :global(.qux .sux) {}
         :global(.qux :global .wat) {}
+    `,
+  },
+  multipleComplex: {
+    css: `
+      :global {
+        :global(.foo) {}
+        :global .foo, .baz {}
+        .qux {
+          .sux, .works {}
+          :global .wat, :global .works {}
+        }
+      }
+    `,
+    ref: `
+      :global(:global(.foo)) {}
+        :global(:global .foo), :global(.baz) {}
+        :global(.qux .sux), :global(.qux .works) {}
+        :global(.qux :global .wat), :global(.qux :global .works) {}
+    `,
+  },
+  multipleComplexLocal: {
+    css: `
+      :global {
+        :global(.foo) {}
+        :local .foo, .baz {}
+        .qux {
+          .sux, .works {}
+          :global .wat, :local .works {}
+        }
+      }
+    `,
+    ref: `
+      :global(:global(.foo)) {}
+        :global(:local .foo), :global(.baz) {}
+        :global(.qux .sux), :global(.qux .works) {}
+        :global(.qux :global .wat), :global(.qux :local .works) {}
     `,
   },
   nested: {
@@ -59,27 +103,10 @@ const fixtures = {
   },
 };
 
-test('basic', async t => {
-  const result = await pcss([nested, globalNested]).process(fixtures.basic.css);
-  t.is(result.css.trim(), fixtures.basic.ref);
-});
-
-test('simple', async t => {
-  const result = await pcss([nested, globalNested]).process(fixtures.simple.css);
-  t.is(result.css.trim(), fixtures.simple.ref);
-});
-
-test('complex', async t => {
-  const result = await pcss([nested, globalNested]).process(fixtures.complex.css);
-  t.is(result.css, fixtures.complex.ref);
-});
-
-test('nested', async t => {
-  const result = await pcss([nested, globalNested]).process(fixtures.nested.css);
-  t.is(result.css.trim(), fixtures.nested.ref);
-});
-
-test('multiselector', async t => {
-  const result = await pcss([nested, globalNested]).process(fixtures.multiselector.css);
-  t.is(result.css.trim(), fixtures.multiselector.ref);
-});
+Object.keys(fixtures)
+  .map(fixture => {
+    test(fixture, async t => {
+      const result = await pcss([nested, globalNested]).process(fixtures[fixture].css);
+      t.is(result.css.trim(), fixtures[fixture].ref.trim());
+    });
+  });
